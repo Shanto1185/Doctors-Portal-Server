@@ -27,6 +27,18 @@ async function run() {
             console.log(result);
             res.json(result);
         })
+
+        //get api
+        app.get('/appoinments', async (req, res) => {
+            const email = req.query.email;
+            const date = new Date(req.query.date).toLocaleDateString()
+
+            const query = { email: email, date: date }
+            // console.log(query)
+            const cursor = appoinmentCollection.find(query)
+            const appoinment = await cursor.toArray();
+            res.json(appoinment)
+        })
     }
     finally {
         // await client.close()
